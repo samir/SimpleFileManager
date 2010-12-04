@@ -20,6 +20,7 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : false;
 $user   = (isset($_GET['user']))   ? $_GET['user']   : false;
 $hash   = (isset($_GET['hash']))   ? $_GET['hash']   : false;
 
+$page_title = strtoupper($user) . " &laquo; SimpleFileManager";
 
 # Validations
 # ------------------------------------------------------------------------------
@@ -77,6 +78,8 @@ catch(Exception $e)
 
 if($action == 'd')
 {
+  validate_hash($hash,$user);
+
   $file = $files_list[$hash]['pathname'];
   $filename = $files_list[$hash]['filename'];
   // Extract the type of file which will be sent to the browser as a header
@@ -104,7 +107,7 @@ if($action == 'd')
 if($action == 'e')
 {
   
-  validate_hash($hash);
+  validate_hash($hash,$user);
 
   $file = $files_list[$hash]['pathname'];
   if(is_file($file))
@@ -116,16 +119,18 @@ if($action == 'e')
   }
 }
 
-
-
-include('view/header.php');
-include('view/list.php');
-
-function validate_hash($hash)
+function validate_hash($hash,$user)
 {
-  global $files_list, $user;
   if(!isset($files_list[$hash]))
   {
     header("Location: /u/{$user}");
   }
 }
+
+
+
+// Show template
+
+include('view/header.php');
+include('view/main.php');
+include('view/footer.php');
