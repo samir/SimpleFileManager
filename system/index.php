@@ -140,6 +140,7 @@ if($action == 'del')
     if(@unlink($file))
     {
       unset($files_list[$hash]);
+      header("Location: /u/{$user}/");
     }
   }
 }
