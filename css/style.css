@@ -19,10 +19,15 @@ a.lnk_download { background: url(/css/img/disk.png); }
 a.lnk_delete   { background: url(/css/img/delete.png); }
 
 #header { height:90px;}
-#footer { height: 90px;}
+#footer { height: 0px;}
 #main { padding: 0 30px; width:900px; margin: 0 auto; background: #fff; min-height:100%; border-left:1px solid #aaa;border-right:1px solid #aaa;}
 
 /* Setup logo or text of your site here */
 #header h1 { width:300px; float:left; font-size:10px; height:80px; background: #fafafa; }
 
 #header h2 { font-size:25px; padding:10px;}
+
+#footer p { font-size:13px; color:#666; line-height: 20px;}
+#footer p.right { text-align:right;  }
+#footer small {font-size:10px; }
+#footer p a { color:#333;}
