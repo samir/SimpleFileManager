@@ -7,5 +7,9 @@
   </header>
 <body>
 <div id="main">
-  <div id="header"></div>
+  <div id="header">
+    <h1>Empresa</h1>
+    <h2><?=$title?></h2>
+    <h3>Área de download de arquivos</h3>
+  </div>
   <div id="content">

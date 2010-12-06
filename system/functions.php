@@ -48,3 +48,14 @@ function byte_format($num)
 
 	return number_format($num, 1).' '.$unit;
 }	
+
+function can_delete()
+{
+  global $_user_config;
+  if((int) $_user_config['delete'] == 1)
+  {
+    return true;
+  } else {
+    return false;
+  }
+}

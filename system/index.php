@@ -22,7 +22,8 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : false;
 $user   = (isset($_GET['user']))   ? $_GET['user']   : false;
 $hash   = (isset($_GET['hash']))   ? $_GET['hash']   : false;
 
-$page_title = strtoupper($user) . " &laquo; SimpleFileManager";
+$title = ucwords(preg_replace('/(-|_)/',' ',$user));
+$page_title = $title . " &laquo; SimpleFileManager";
 
 # Validations
 # ------------------------------------------------------------------------------
@@ -46,6 +47,11 @@ if($error) header('Location: /?e='.$error);
 # ------------------------------------------------------------------------------
 
 $user_folder = $_base.$user.'/';
+
+# Get user config
+# ------------------------------------------------------------------------------
+
+$_user_config = $_config[$user];
 
 
 # Check directory permissions and set write if necessary
@@ -127,7 +133,10 @@ if($action == 'del')
 {
   
   validate_hash($hash,$user);
-
+  
+  # If delete not permitted, return to list;
+  if(!can_delete()) header("Location: /u/{$user}/?error=1");
+  
   $file = $files_list[$hash]['pathname'];
   if(is_file($file))
   {
