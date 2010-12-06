@@ -8,8 +8,8 @@
 <body>
 <div id="main">
   <div id="header">
-    <h1>Empresa</h1>
-    <h2><?=$title?></h2>
-    <h3>Área de download de arquivos</h3>
+    <h1><?=$_config['website']?></h1>
+    <h2><?=$_user_config['title']?></h2>
+    <h3><?=$_config['headline']?></h3>
   </div>
   <div id="content">

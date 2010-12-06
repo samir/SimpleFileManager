@@ -22,9 +22,6 @@ $action = (isset($_GET['action'])) ? $_GET['action'] : false;
 $user   = (isset($_GET['user']))   ? $_GET['user']   : false;
 $hash   = (isset($_GET['hash']))   ? $_GET['hash']   : false;
 
-$title = ucwords(preg_replace('/(-|_)/',' ',$user));
-$page_title = $title . " &laquo; SimpleFileManager";
-
 # Validations
 # ------------------------------------------------------------------------------
 
@@ -148,6 +145,8 @@ if($action == 'del')
 }
 
 // Show template
+
+$page_title = $_user_config['title'] . " &laquo; " . $_config['website'];
 
 include('view/header.php');
 include('view/main.php');
