@@ -3,4 +3,4 @@ Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^u/([a-z0-9]*)/?([u|d|e])?/?([a-f0-9]{32})?$  system/index.php?action=$2&user=$1&hash=$3 [L,NC,QSA]
+RewriteRule ^u/([a-z0-9\_\-]*)/?(get|del)?/?([a-f0-9]{32})?$  system/index.php?action=$2&user=$1&hash=$3 [L,NC,QSA]

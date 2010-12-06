@@ -1,1 +1,2 @@
-give 0777 to this folder and childs
+- create folders as same accounts defined in /system/config.ini
+- give 0777 to this folder and childs

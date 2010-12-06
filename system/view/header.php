@@ -3,7 +3,9 @@
   <head>
     <title><?= $page_title; ?></title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-  	<link rel="stylesheet" type="text/css" href="/style.css" media="screen" />
+  	<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen" />
   </header>
 <body>
 <div id="main">
+  <div id="header"></div>
+  <div id="content">

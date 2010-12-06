@@ -1,5 +1,7 @@
 <?php
 
+include('functions.php');
+
 header("Content-Type: text/html; charset=UTF-8");
 date_default_timezone_set('America/Sao_Paulo');
 
@@ -40,12 +42,20 @@ if(!is_dir($_base.$user)) $error = 3;
 if($error) header('Location: /?e='.$error);
 
 
-
-
 # Get Files list
 # ------------------------------------------------------------------------------
 
 $user_folder = $_base.$user.'/';
+
+
+# Check directory permissions and set write if necessary
+# ------------------------------------------------------------------------------
+
+directory_permission($_base,0777);
+directory_permission($user_folder,0777);
+
+
+$total = array('qtd'=>0,'size'=>0);
 
 try
 {
@@ -55,13 +65,20 @@ try
   {
     $hash_key = md5($user.$item);
     $files_list[$hash_key] = array(
-                      'mtime' => date('d/m/Y H:i:s',$item->getMTime()),
-                      'path' => $item->getPath(),
+                      'mtime'    => date('d/m/Y H:i:s',$item->getMTime()),
+                      'path'     => $item->getPath(),
                       'pathname' => $item->getPathname(),
                       'filename' => $item->getFilename(),
-                      'del_path' => "/u/{$user}/e/{$hash_key}",
-                      'get_path' => "/u/{$user}/d/{$hash_key}",
+                      'size'     => byte_format($item->getSize()),
+                      'del_path' => "/u/{$user}/del/{$hash_key}",
+                      'get_path' => "/u/{$user}/get/{$hash_key}",
                    );
+
+    if(!in_array($item->getFilename(),array('.','..')))
+    {
+      $total['qtd']++;
+      $total['size'] += $item->getSize(); 
+    }
   }
 }
 /*** if an exception is thrown, catch it here ***/
@@ -76,12 +93,14 @@ catch(Exception $e)
 # Verify actions
 # ------------------------------------------------------------------------------
 
-if($action == 'd')
+if($action == 'get')
 {
+
   validate_hash($hash,$user);
 
   $file = $files_list[$hash]['pathname'];
   $filename = $files_list[$hash]['filename'];
+
   // Extract the type of file which will be sent to the browser as a header
   $type = filetype($file);
    
@@ -104,7 +123,7 @@ if($action == 'd')
 }
 
 
-if($action == 'e')
+if($action == 'del')
 {
   
   validate_hash($hash,$user);
@@ -118,16 +137,6 @@ if($action == 'e')
     }
   }
 }
-
-function validate_hash($hash,$user)
-{
-  if(!isset($files_list[$hash]))
-  {
-    header("Location: /u/{$user}");
-  }
-}
-
-
 
 // Show template
 
